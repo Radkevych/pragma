@@ -339,6 +339,41 @@
 					</section>
 				{/if}
 
+{* Competing Interests *}
+{assign var="hasCompetingInterests" value=false}
+{foreach from=$publication->getData('authors') item=author}
+    {if $author->getLocalizedData('competingInterests')}
+        {assign var="hasCompetingInterests" value=true}
+        {break}
+    {/if}
+{/foreach}
+
+{if $hasCompetingInterests}
+    <hr>
+    <section id="author-list" class="competing-interests">
+        <h2>
+            {if $currentLocale == 'uk'}Конфлікт інтересів{else}Competing Interests{/if}
+        </h2>
+        {foreach from=$publication->getData('authors') item=author}
+            {if $author->getLocalizedData('competingInterests')}
+                <p><strong>{$author->getFullName()|escape}:</strong> {$author->getLocalizedData('competingInterests')|strip_unsafe_html}</p>
+            {/if}
+        {/foreach}
+    </section>
+{/if}
+
+{* Data Availability *}
+{assign var="dataAvailability" value=$publication->getLocalizedData('dataAvailability')}
+{if $dataAvailability}
+    <hr>
+    <section id="data-availability-statement" class="data-availability">
+        <h2>
+            {if $currentLocale == 'uk'}Доступність даних{else}Data Availability{/if}
+        </h2>
+        <p>{$dataAvailability|strip_unsafe_html}</p>
+    </section>
+{/if}
+
 				{* References *}
 				{if $parsedCitations || $publication->getData('citationsRaw')}
 					<hr>
