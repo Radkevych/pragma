@@ -341,21 +341,24 @@
 
 				{* References *}
 				{if $parsedCitations || $publication->getData('citationsRaw')}
-					<hr>
-					<section>
-						<h2>
-							{translate key="submission.citations"}
-						</h2>
-						{if $parsedCitations}
-							<ol>
-								{foreach from=$parsedCitations item="parsedCitation"}
-									<li>{$parsedCitation->getCitationWithLinks()|strip_unsafe_html} {call_hook name="Templates::Article::Details::Reference" citation=$parsedCitation}</li>
-								{/foreach}
-							</ol>
-						{else}
-							<p>{$publication->getData('citationsRaw')|escape|nl2br}</p>
-						{/if}
-					</section>
+				    <hr>
+				    <section class="item references">
+				        <h2 class="label">
+				            {translate key="submission.citations"}
+				        </h2>
+				        {if $parsedCitations}
+				            <div class="references-list" style="margin-top: 15px;">
+				                {foreach from=$parsedCitations item="parsedCitation"}
+				                    <p style="list-style: none; margin-bottom: 12px; padding-left: 0;">
+				                        {$parsedCitation->getCitationWithLinks()|strip_unsafe_html} 
+				                        {call_hook name="Templates::Article::Details::Reference" citation=$parsedCitation}
+				                    </p>
+				                {/foreach}
+				            </div>
+				        {else}
+				            <p>{$publication->getData('citationsRaw')|escape|nl2br}</p>
+				        {/if}
+				    </section>
 				{/if}
 
 				{call_hook name="Templates::Article::Main"}
