@@ -25,14 +25,14 @@
     {assign var="currentCanonical" value="https://`$smarty.server.SERVER_NAME``$smarty.server.REQUEST_URI`"}
     <link rel="canonical" href="{$currentCanonical|escape}">
     
-    {* Google Analytics G-020FZRWZ65 з обгорткою literal для Smarty *}
+    {* Google Analytics G-########## з обгорткою literal для Smarty *}
     {literal}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-020FZRWZ65"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-##########"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-020FZRWZ65');
+      gtag('config', 'G-##########');
     </script>
     {/literal}
 </head>
