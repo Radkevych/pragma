@@ -11,10 +11,19 @@
 	<meta charset="{$defaultCharset|escape}">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>
-		{$pageTitleTranslated|strip_tags}
-		{* Add the journal name to the end of page titles *}
-		{if $requestedPage|escape|default:"index" != 'index' && $currentContext && $currentContext->getLocalizedName()}
-			| {$currentContext->getLocalizedName()}
+		{if isset($publication) && $publication}
+			{$publication->getLocalizedFullTitle()|strip_tags|escape}
+		{elseif isset($article) && $article}
+			{$article->getLocalizedTitle()|strip_tags|escape}
+		{elseif isset($submission) && $submission}
+			{$submission->getLocalizedTitle()|strip_tags|escape}
+		{elseif isset($pageTitleTranslated) && $pageTitleTranslated}
+			{$pageTitleTranslated|strip_tags|escape}
+		{elseif isset($pageTitle) && $pageTitle}
+			{translate|strip_tags|escape key=$pageTitle}
+		{/if}
+		{if isset($requestedPage) && $requestedPage != 'index' && isset($currentContext) && $currentContext}
+			| {$currentContext->getLocalizedName()|escape}
 		{/if}
 	</title>
 
@@ -22,17 +31,6 @@
 	{load_stylesheet context="frontend"}
 	
 	{* Канонічне посилання з мовним сегментом для уникнення помилок редиректу *}
-    {assign var="currentCanonical" value="https://`$smarty.server.SERVER_NAME``$smarty.server.REQUEST_URI`"}
-    <link rel="canonical" href="{$currentCanonical|escape}">
-    
-    {* Google Analytics G-########## з обгорткою literal для Smarty *}
-    {literal}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-##########"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-##########');
-    </script>
-    {/literal}
+	{assign var="currentCanonical" value="https://`$smarty.server.SERVER_NAME``$smarty.server.REQUEST_URI`"}
+	<link rel="canonical" href="{$currentCanonical|escape}">
 </head>
